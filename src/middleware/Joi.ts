@@ -58,6 +58,8 @@ export const Schemas = {
             usuarios: Joi.array()
                 .items(Joi.string().regex(/^[0-9a-fA-F]{24}$/))
                 .optional()
+		,
+	status: Joi.string().required().valid('To do','In Progress','Done')
         })
     }
 };
