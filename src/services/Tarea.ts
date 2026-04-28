@@ -7,6 +7,7 @@ interface ICreateTareaInput {
     fechaInicio: Date;
     fechaFin: Date;
     usuarios?: (mongoose.Types.ObjectId | string)[];
+    status: string;
 }
 
 const createTareaByOrganizacion = async (
@@ -28,7 +29,8 @@ const createTareaByOrganizacion = async (
         fechaInicio: data.fechaInicio,
         fechaFin: data.fechaFin,
         usuarios: data.usuarios || [],
-        organizacionId
+	status: data.status,
+        organizacionId: organizacionId
     });
 
     return await tarea.save();
