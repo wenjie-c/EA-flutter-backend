@@ -57,9 +57,17 @@ export const Schemas = {
             fechaFin: Joi.date().required(),
             usuarios: Joi.array()
                 .items(Joi.string().regex(/^[0-9a-fA-F]{24}$/))
-                .optional()
-		,
-	status: Joi.string().required().valid('To do','In Progress','Done')
+                .optional(),
+            status: Joi.string().required().valid('To do', 'In Progress', 'Done')
+        }),
+        update: Joi.object<ITarea>({
+            titulo: Joi.string().optional(),
+            fechaInicio: Joi.date().optional(),
+            fechaFin: Joi.date().optional(),
+            usuarios: Joi.array()
+                .items(Joi.string().regex(/^[0-9a-fA-F]{24}$/))
+                .optional(),
+            status: Joi.string().optional().valid('To do', 'In Progress', 'Done')
         })
     }
 };

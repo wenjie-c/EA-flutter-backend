@@ -7,6 +7,7 @@ import Logging from './library/Logging';
 import organizacionRoutes from './routes/Organizacion';
 import usuarioRoutes from './routes/Usuario';
 import authRoutes from './routes/Auth';
+import tareasRoute from './routes/Tarea';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './swagger';
 
@@ -25,14 +26,10 @@ mongoose
 const StartServer = () => {
     /** Log the request */
     router.use((req, res, next) => {
-        Logging.info(
-            `Incomming - METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`
-        );
+        Logging.info(`Incomming - METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`);
 
         res.on('finish', () => {
-            Logging.info(
-                `Result - METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}] - STATUS: [${res.statusCode}]`
-            );
+            Logging.info(`Result - METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}] - STATUS: [${res.statusCode}]`);
         });
 
         next();
@@ -51,6 +48,7 @@ const StartServer = () => {
     router.use('/organizaciones', organizacionRoutes);
     router.use('/usuarios', usuarioRoutes);
     router.use('/auth', authRoutes);
+    router.use('/tareas', tareasRoute);
 
     /** Healthcheck */
     router.get('/ping', (req, res, next) => res.status(200).json({ hello: 'world' }));
@@ -66,7 +64,5 @@ const StartServer = () => {
         });
     });
 
-    http.createServer(router).listen(config.server.port, () =>
-        Logging.info(`Server is running on port ${config.server.port}`)
-    );
+    http.createServer(router).listen(config.server.port, () => Logging.info(`Server is running on port ${config.server.port}`));
 };
